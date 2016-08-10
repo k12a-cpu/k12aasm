@@ -1258,116 +1258,128 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-        case 11:
+        case 5:
+#line 36 "k12a/assembler/parser.y" /* yacc.c:1646  */
+    { k12a_asm_yylineno++; }
+#line 1265 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
+    break;
+
+  case 6:
+#line 37 "k12a/assembler/parser.y" /* yacc.c:1646  */
+    { k12a_asm_yylineno++; }
+#line 1271 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
+    break;
+
+  case 11:
 #line 51 "k12a/assembler/parser.y" /* yacc.c:1646  */
     { k12a_asm_make_instruction((yyvsp[-1].s), (yyvsp[0].i)); }
-#line 1265 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
+#line 1277 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
     break;
 
   case 12:
 #line 52 "k12a/assembler/parser.y" /* yacc.c:1646  */
     { k12a_asm_make_instruction((yyvsp[0].s), 0); }
-#line 1271 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
+#line 1283 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
     break;
 
   case 13:
 #line 56 "k12a/assembler/parser.y" /* yacc.c:1646  */
     { k12a_asm_make_label((yyvsp[-1].s)); }
-#line 1277 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
+#line 1289 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
     break;
 
   case 14:
 #line 60 "k12a/assembler/parser.y" /* yacc.c:1646  */
     { (yyval.i) = (yyvsp[-2].i) + 1; }
-#line 1283 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
+#line 1295 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
     break;
 
   case 15:
 #line 61 "k12a/assembler/parser.y" /* yacc.c:1646  */
     { (yyval.i) = 1; }
-#line 1289 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
+#line 1301 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
     break;
 
   case 16:
 #line 65 "k12a/assembler/parser.y" /* yacc.c:1646  */
     { k12a_asm_make_expr_binary((uint8_t) '&'); }
-#line 1295 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
+#line 1307 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
     break;
 
   case 17:
 #line 66 "k12a/assembler/parser.y" /* yacc.c:1646  */
     { k12a_asm_make_expr_binary((uint8_t) '|'); }
-#line 1301 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
+#line 1313 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
     break;
 
   case 18:
 #line 67 "k12a/assembler/parser.y" /* yacc.c:1646  */
     { k12a_asm_make_expr_binary((uint8_t) '^'); }
-#line 1307 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
+#line 1319 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
     break;
 
   case 20:
 #line 72 "k12a/assembler/parser.y" /* yacc.c:1646  */
     { k12a_asm_make_expr_binary((uint8_t) '+'); }
-#line 1313 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
+#line 1325 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
     break;
 
   case 21:
 #line 73 "k12a/assembler/parser.y" /* yacc.c:1646  */
     { k12a_asm_make_expr_binary((uint8_t) '-'); }
-#line 1319 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
+#line 1331 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
     break;
 
   case 23:
 #line 78 "k12a/assembler/parser.y" /* yacc.c:1646  */
     { k12a_asm_make_expr_binary((uint8_t) '*'); }
-#line 1325 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
+#line 1337 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
     break;
 
   case 24:
 #line 79 "k12a/assembler/parser.y" /* yacc.c:1646  */
     { k12a_asm_make_expr_binary((uint8_t) '/'); }
-#line 1331 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
+#line 1343 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
     break;
 
   case 25:
 #line 80 "k12a/assembler/parser.y" /* yacc.c:1646  */
     { k12a_asm_make_expr_binary((uint8_t) '%'); }
-#line 1337 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
+#line 1349 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
     break;
 
   case 27:
 #line 85 "k12a/assembler/parser.y" /* yacc.c:1646  */
     { k12a_asm_make_expr_unary((uint8_t) '-'); }
-#line 1343 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
+#line 1355 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
     break;
 
   case 28:
 #line 86 "k12a/assembler/parser.y" /* yacc.c:1646  */
     { k12a_asm_make_expr_unary((uint8_t) '~'); }
-#line 1349 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
+#line 1361 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
     break;
 
   case 30:
 #line 91 "k12a/assembler/parser.y" /* yacc.c:1646  */
     { k12a_asm_make_expr_literal((yyvsp[0].i)); }
-#line 1355 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
+#line 1367 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
     break;
 
   case 31:
 #line 92 "k12a/assembler/parser.y" /* yacc.c:1646  */
     { k12a_asm_make_expr_reg((yyvsp[0].i)); }
-#line 1361 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
+#line 1373 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
     break;
 
   case 32:
 #line 93 "k12a/assembler/parser.y" /* yacc.c:1646  */
     { k12a_asm_make_expr_labelref((yyvsp[0].s)); }
-#line 1367 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
+#line 1379 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
     break;
 
 
-#line 1371 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
+#line 1383 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires

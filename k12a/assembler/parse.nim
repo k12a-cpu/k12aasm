@@ -1,6 +1,6 @@
 import tables
 from os import parentDir
-from strutils import `%`
+from strutils import `%`, toLower
 
 import types
 
@@ -47,19 +47,22 @@ proc parseError(msg: cstring) {.cdecl, exportc: "k12a_asm_yyerror".} =
 proc makeInstruction(mnemonic: cstring, numOperands: int64) {.cdecl, exportc: "k12a_asm_make_instruction".} =
   let operands = exprStack.popn(numOperands.int)
   unit.items.add Item(
+    loc: currentLoc(),
     kind: itemInstruction,
-    mnemonic: $mnemonic,
+    mnemonic: ($mnemonic).toLower(),
     operands: operands,
   )
 
 proc makeLabel(name: cstring) {.cdecl, exportc: "k12a_asm_make_label".} =
   unit.items.add Item(
+    loc: currentLoc(),
     kind: itemLabel,
     labelName: $name,
   )
 
 proc makeExprLiteral(value: int64) {.cdecl, exportc: "k12a_asm_make_expr_literal".} =
   exprStack.add Expr(
+    loc: currentLoc(),
     kind: exprLiteral,
     literal: value.int,
   )
@@ -73,12 +76,14 @@ proc makeExprReg(regVal: int64) {.cdecl, exportc: "k12a_asm_make_expr_reg".} =
     of 3: regD
     else: unreachable[Register]()
   exprStack.add Expr(
+    loc: currentLoc(),
     kind: exprReg,
     reg: reg,
   )
 
 proc makeExprLabelRef(name: cstring) {.cdecl, exportc: "k12a_asm_make_expr_labelref".} =
   exprStack.add Expr(
+    loc: currentLoc(),
     kind: exprLabelRef,
     labelName: $name,
   )
@@ -86,11 +91,12 @@ proc makeExprLabelRef(name: cstring) {.cdecl, exportc: "k12a_asm_make_expr_label
 proc makeExprUnary(opChar: uint8) {.cdecl, exportc: "k12a_asm_make_expr_unary".} =
   let op =
     case opChar
-    of '-'.ord: opNeg
-    of '~'.ord: opNot
+    of '-'.ord: uopNeg
+    of '~'.ord: uopNot
     else: unreachable[UnaryOp]()
   let child = exprStack.pop()
   exprStack.add Expr(
+    loc: currentLoc(),
     kind: exprUnary,
     unaryOp: op,
     child: child,
@@ -99,18 +105,19 @@ proc makeExprUnary(opChar: uint8) {.cdecl, exportc: "k12a_asm_make_expr_unary".}
 proc makeExprBinary(opChar: uint8) {.cdecl, exportc: "k12a_asm_make_expr_binary".} =
   let op =
     case opChar
-    of '&'.ord: opAnd
-    of '|'.ord: opOr
-    of '^'.ord: opXor
-    of '+'.ord: opAdd
-    of '-'.ord: opSub
-    of '*'.ord: opMul
-    of '/'.ord: opDiv
-    of '%'.ord: opMod
+    of '&'.ord: bopAnd
+    of '|'.ord: bopOr
+    of '^'.ord: bopXor
+    of '+'.ord: bopAdd
+    of '-'.ord: bopSub
+    of '*'.ord: bopMul
+    of '/'.ord: bopDiv
+    of '%'.ord: bopMod
     else: unreachable[BinaryOp]()
   let rightChild = exprStack.pop()
   let leftChild = exprStack.pop()
   exprStack.add Expr(
+    loc: currentLoc(),
     kind: exprBinary,
     binaryOp: op,
     leftChild: leftChild,

@@ -9,4 +9,5 @@ bin           = @["k12aasm"]
 # Dependencies
 
 requires "nim >= 0.14"
+requires "k12acommon >= 0.1.0"
 

@@ -33,8 +33,8 @@ optional_newlines
     ;
 
 newlines
-    : newlines NEWLINE
-    | NEWLINE
+    : newlines NEWLINE                  { k12a_asm_yylineno++; }
+    | NEWLINE                           { k12a_asm_yylineno++; }
     ;
 
 lines

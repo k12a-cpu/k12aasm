@@ -1,6 +1,5 @@
 %option prefix="k12a_asm_yy"
 %option noyywrap
-%option yylineno
 
 %{
 

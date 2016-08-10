@@ -194,27 +194,8 @@ extern FILE *k12a_asm_yyin, *k12a_asm_yyout;
 #define EOB_ACT_END_OF_FILE 1
 #define EOB_ACT_LAST_MATCH 2
 
-    /* Note: We specifically omit the test for yy_rule_can_match_eol because it requires
-     *       access to the local variable yy_act. Since yyless() is a macro, it would break
-     *       existing scanners that call yyless() from OUTSIDE k12a_asm_yylex. 
-     *       One obvious solution it to make yy_act a global. I tried that, and saw
-     *       a 5% performance hit in a non-k12a_asm_yylineno scanner, because yy_act is
-     *       normally declared as a register variable-- so it is not worth it.
-     */
-    #define  YY_LESS_LINENO(n) \
-            do { \
-                int yyl;\
-                for ( yyl = n; yyl < k12a_asm_yyleng; ++yyl )\
-                    if ( k12a_asm_yytext[yyl] == '\n' )\
-                        --k12a_asm_yylineno;\
-            }while(0)
-    #define YY_LINENO_REWIND_TO(dst) \
-            do {\
-                const char *p;\
-                for ( p = yy_cp-1; p >= (dst); --p)\
-                    if ( *p == '\n' )\
-                        --k12a_asm_yylineno;\
-            }while(0)
+    #define YY_LESS_LINENO(n)
+    #define YY_LINENO_REWIND_TO(ptr)
     
 /* Return all but the first "n" matched characters back to the input stream. */
 #define yyless(n) \
@@ -524,11 +505,6 @@ static yyconst flex_int16_t yy_chk[118] =
        37,   37,   37,   37,   37,   37,   37
     } ;
 
-/* Table of booleans, true if rule could match eol. */
-static yyconst flex_int32_t yy_rule_can_match_eol[17] =
-    {   0,
-0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,     };
-
 static yy_state_type yy_last_accepting_state;
 static char *yy_last_accepting_cpos;
 
@@ -544,14 +520,14 @@ int k12a_asm_yy_flex_debug = 0;
 #define YY_RESTORE_YY_MORE_OFFSET
 char *k12a_asm_yytext;
 #line 1 "k12a/assembler/lexer.l"
-#line 6 "k12a/assembler/lexer.l"
+#line 5 "k12a/assembler/lexer.l"
 
 #include <stdint.h>
 #include <stdlib.h>
 
 #include "parser_gen.h"
 
-#line 555 "k12a/assembler/lexer_gen.c"
+#line 531 "k12a/assembler/lexer_gen.c"
 
 #define INITIAL 0
 
@@ -769,10 +745,10 @@ YY_DECL
 		}
 
 	{
-#line 14 "k12a/assembler/lexer.l"
+#line 13 "k12a/assembler/lexer.l"
 
 
-#line 776 "k12a/assembler/lexer_gen.c"
+#line 752 "k12a/assembler/lexer_gen.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -818,16 +794,6 @@ yy_find_action:
 
 		YY_DO_BEFORE_ACTION;
 
-		if ( yy_act != YY_END_OF_BUFFER && yy_rule_can_match_eol[yy_act] )
-			{
-			yy_size_t yyl;
-			for ( yyl = 0; yyl < k12a_asm_yyleng; ++yyl )
-				if ( k12a_asm_yytext[yyl] == '\n' )
-					   
-    k12a_asm_yylineno++;
-;
-			}
-
 do_action:	/* This label is used only to access EOF actions. */
 
 		switch ( yy_act )
@@ -841,18 +807,18 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 16 "k12a/assembler/lexer.l"
+#line 15 "k12a/assembler/lexer.l"
 ;
 	YY_BREAK
 case 2:
 /* rule 2 can match eol */
 YY_RULE_SETUP
-#line 17 "k12a/assembler/lexer.l"
+#line 16 "k12a/assembler/lexer.l"
 { return NEWLINE; }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 19 "k12a/assembler/lexer.l"
+#line 18 "k12a/assembler/lexer.l"
 { return k12a_asm_yytext[0]; }
 	YY_BREAK
 case 4:
@@ -862,7 +828,7 @@ YY_LINENO_REWIND_TO(yy_bp + 1);
 (yy_c_buf_p) = yy_cp = yy_bp + 1;
 YY_DO_BEFORE_ACTION; /* set up k12a_asm_yytext again */
 YY_RULE_SETUP
-#line 21 "k12a/assembler/lexer.l"
+#line 20 "k12a/assembler/lexer.l"
 { k12a_asm_yylval.i = 0;
                                 return REG; }
 	YY_BREAK
@@ -873,7 +839,7 @@ YY_LINENO_REWIND_TO(yy_bp + 1);
 (yy_c_buf_p) = yy_cp = yy_bp + 1;
 YY_DO_BEFORE_ACTION; /* set up k12a_asm_yytext again */
 YY_RULE_SETUP
-#line 23 "k12a/assembler/lexer.l"
+#line 22 "k12a/assembler/lexer.l"
 { k12a_asm_yylval.i = 1;
                                 return REG; }
 	YY_BREAK
@@ -884,7 +850,7 @@ YY_LINENO_REWIND_TO(yy_bp + 1);
 (yy_c_buf_p) = yy_cp = yy_bp + 1;
 YY_DO_BEFORE_ACTION; /* set up k12a_asm_yytext again */
 YY_RULE_SETUP
-#line 25 "k12a/assembler/lexer.l"
+#line 24 "k12a/assembler/lexer.l"
 { k12a_asm_yylval.i = 2;
                                 return REG; }
 	YY_BREAK
@@ -895,65 +861,65 @@ YY_LINENO_REWIND_TO(yy_bp + 1);
 (yy_c_buf_p) = yy_cp = yy_bp + 1;
 YY_DO_BEFORE_ACTION; /* set up k12a_asm_yytext again */
 YY_RULE_SETUP
-#line 27 "k12a/assembler/lexer.l"
+#line 26 "k12a/assembler/lexer.l"
 { k12a_asm_yylval.i = 3;
                                 return REG; }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 30 "k12a/assembler/lexer.l"
+#line 29 "k12a/assembler/lexer.l"
 { k12a_asm_yylval.i = (int64_t) strtol(k12a_asm_yytext+2, NULL, 16);
                                 return INT; }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 32 "k12a/assembler/lexer.l"
+#line 31 "k12a/assembler/lexer.l"
 { k12a_asm_yylval.i = -((int64_t) strtol(k12a_asm_yytext+2, NULL, 16));
                                 return INT; }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 34 "k12a/assembler/lexer.l"
+#line 33 "k12a/assembler/lexer.l"
 { k12a_asm_yylval.i = (int64_t) strtol(k12a_asm_yytext+2, NULL, 2);
                                 return INT; }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 36 "k12a/assembler/lexer.l"
+#line 35 "k12a/assembler/lexer.l"
 { k12a_asm_yylval.i = -((int64_t) strtol(k12a_asm_yytext+2, NULL, 2));
                                 return INT; }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 38 "k12a/assembler/lexer.l"
+#line 37 "k12a/assembler/lexer.l"
 { k12a_asm_yylval.i = (int64_t) strtol(k12a_asm_yytext, NULL, 10);
                                 return INT; }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 40 "k12a/assembler/lexer.l"
+#line 39 "k12a/assembler/lexer.l"
 { k12a_asm_yylval.i = -((int64_t) strtol(k12a_asm_yytext, NULL, 10));
                                 return INT; }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 43 "k12a/assembler/lexer.l"
+#line 42 "k12a/assembler/lexer.l"
 { k12a_asm_yylval.s = strdup(k12a_asm_yytext);
                                 return IDENTIFIER; }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 46 "k12a/assembler/lexer.l"
+#line 45 "k12a/assembler/lexer.l"
 { char msg[64];
                                 snprintf(msg, 64, "invalid character '%c'", k12a_asm_yytext[0]);
                                 k12a_asm_yyerror(msg); }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 50 "k12a/assembler/lexer.l"
+#line 49 "k12a/assembler/lexer.l"
 ECHO;
 	YY_BREAK
-#line 957 "k12a/assembler/lexer_gen.c"
+#line 923 "k12a/assembler/lexer_gen.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1317,10 +1283,6 @@ static int yy_get_next_buffer (void)
 
 	*--yy_cp = (char) c;
 
-    if ( c == '\n' ){
-        --k12a_asm_yylineno;
-    }
-
 	(yytext_ptr) = yy_bp;
 	(yy_hold_char) = *yy_cp;
 	(yy_c_buf_p) = yy_cp;
@@ -1397,11 +1359,6 @@ static int yy_get_next_buffer (void)
 	c = *(unsigned char *) (yy_c_buf_p);	/* cast for 8-bit char's */
 	*(yy_c_buf_p) = '\0';	/* preserve k12a_asm_yytext */
 	(yy_hold_char) = *++(yy_c_buf_p);
-
-	if ( c == '\n' )
-		   
-    k12a_asm_yylineno++;
-;
 
 	return c;
 }
@@ -1869,9 +1826,6 @@ static int yy_init_globals (void)
      * This function is called from k12a_asm_yylex_destroy(), so don't allocate here.
      */
 
-    /* We do not touch k12a_asm_yylineno unless the option is enabled. */
-    k12a_asm_yylineno =  1;
-    
     (yy_buffer_stack) = 0;
     (yy_buffer_stack_top) = 0;
     (yy_buffer_stack_max) = 0;
@@ -1966,7 +1920,7 @@ void k12a_asm_yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 50 "k12a/assembler/lexer.l"
+#line 49 "k12a/assembler/lexer.l"
 
 
 

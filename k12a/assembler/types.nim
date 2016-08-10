@@ -1,4 +1,7 @@
+from k12a.types import Register
 from strutils import `%`
+
+export Register
 
 type
   Loc* = ref object
@@ -14,12 +17,6 @@ proc `$`*(loc: Loc): string =
   "$1:$2" % [loc.file, $loc.line]
 
 type
-  Register* = enum
-    regA
-    regB
-    regC
-    regD
-  
   ExprKind* = enum
     exprLiteral
     exprReg
@@ -28,20 +25,21 @@ type
     exprBinary
   
   UnaryOp* = enum
-    opNeg
-    opNot
+    uopNeg
+    uopNot
   
   BinaryOp* = enum
-    opAnd
-    opOr
-    opXor
-    opAdd
-    opSub
-    opMul
-    opDiv
-    opMod
+    bopAnd
+    bopOr
+    bopXor
+    bopAdd
+    bopSub
+    bopMul
+    bopDiv
+    bopMod
   
   Expr* = ref object
+    loc*: Loc
     case kind*: ExprKind
     of exprLiteral:
       literal*: int
@@ -62,6 +60,8 @@ type
     itemLabel
   
   Item* = ref object
+    loc*: Loc
+    address*: uint16
     case kind*: ItemKind
     of itemInstruction:
       mnemonic*: string
@@ -71,3 +71,5 @@ type
   
   CompilationUnit* = ref object
     items*: seq[Item]
+  
+  Image* = ref array[0x0000u16 .. 0x7FFFu16, uint8]
