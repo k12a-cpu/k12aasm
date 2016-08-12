@@ -125,9 +125,11 @@ extern int k12a_asm_yydebug;
   enum k12a_asm_yytokentype
   {
     NEWLINE = 258,
-    INT = 259,
-    REG = 260,
-    IDENTIFIER = 261
+    LSHIFT = 259,
+    RSHIFT = 260,
+    INT = 261,
+    REG = 262,
+    IDENTIFIER = 263
   };
 #endif
 
@@ -141,7 +143,7 @@ union K12A_ASM_YYSTYPE
     int64_t i;
     char *s;
 
-#line 145 "k12a/assembler/parser_gen.c" /* yacc.c:355  */
+#line 147 "k12a/assembler/parser_gen.c" /* yacc.c:355  */
 };
 
 typedef union K12A_ASM_YYSTYPE K12A_ASM_YYSTYPE;
@@ -158,7 +160,7 @@ int k12a_asm_yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 162 "k12a/assembler/parser_gen.c" /* yacc.c:358  */
+#line 164 "k12a/assembler/parser_gen.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -400,21 +402,21 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  5
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   51
+#define YYLAST   55
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  20
+#define YYNTOKENS  22
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  14
+#define YYNNTS  15
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  33
+#define YYNRULES  36
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  50
+#define YYNSTATES  55
 
 /* YYTRANSLATE[YYX] -- Symbol number corresponding to YYX as returned
    by yylex, with out-of-bounds checking.  */
 #define YYUNDEFTOK  2
-#define YYMAXUTOK   261
+#define YYMAXUTOK   263
 
 #define YYTRANSLATE(YYX)                                                \
   ((unsigned int) (YYX) <= YYMAXUTOK ? yytranslate[YYX] : YYUNDEFTOK)
@@ -426,16 +428,16 @@ static const yytype_uint8 yytranslate[] =
        0,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,    16,     9,     2,
-      18,    19,    14,    12,     8,    13,     2,    15,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,     2,     7,     2,
+       2,     2,     2,     2,     2,     2,     2,    18,    11,     2,
+      20,    21,    16,    14,    10,    15,     2,    17,     2,     2,
+       2,     2,     2,     2,     2,     2,     2,     2,     9,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,    11,     2,     2,     2,     2,     2,
+       2,     2,     2,     2,    13,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,    10,     2,    17,     2,     2,     2,
+       2,     2,     2,     2,    12,     2,    19,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
@@ -449,7 +451,7 @@ static const yytype_uint8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
-       5,     6
+       5,     6,     7,     8
 };
 
 #if K12A_ASM_YYDEBUG
@@ -458,8 +460,8 @@ static const yytype_uint8 yyrline[] =
 {
        0,    27,    27,    31,    32,    36,    37,    41,    42,    46,
       47,    51,    52,    56,    60,    61,    65,    66,    67,    68,
-      72,    73,    74,    78,    79,    80,    81,    85,    86,    87,
-      91,    92,    93,    94
+      72,    73,    74,    78,    79,    80,    84,    85,    86,    87,
+      91,    92,    93,    97,    98,    99,   100
 };
 #endif
 
@@ -468,11 +470,12 @@ static const yytype_uint8 yyrline[] =
    First, the terminals, then, starting at YYNTOKENS, nonterminals.  */
 static const char *const yytname[] =
 {
-  "$end", "error", "$undefined", "NEWLINE", "INT", "REG", "IDENTIFIER",
-  "':'", "','", "'&'", "'|'", "'^'", "'+'", "'-'", "'*'", "'/'", "'%'",
-  "'~'", "'('", "')'", "$accept", "compilation_unit", "optional_newlines",
-  "newlines", "lines", "line", "instruction", "label", "operands", "expr",
-  "expr_sum", "expr_product", "expr_unary", "expr_atom", YY_NULLPTR
+  "$end", "error", "$undefined", "NEWLINE", "LSHIFT", "RSHIFT", "INT",
+  "REG", "IDENTIFIER", "':'", "','", "'&'", "'|'", "'^'", "'+'", "'-'",
+  "'*'", "'/'", "'%'", "'~'", "'('", "')'", "$accept", "compilation_unit",
+  "optional_newlines", "newlines", "lines", "line", "instruction", "label",
+  "operands", "expr", "expr_shift", "expr_sum", "expr_product",
+  "expr_unary", "expr_atom", YY_NULLPTR
 };
 #endif
 
@@ -481,15 +484,16 @@ static const char *const yytname[] =
    (internal) symbol number NUM (which must be that of a token).  */
 static const yytype_uint16 yytoknum[] =
 {
-       0,   256,   257,   258,   259,   260,   261,    58,    44,    38,
-     124,    94,    43,    45,    42,    47,    37,   126,    40,    41
+       0,   256,   257,   258,   259,   260,   261,   262,   263,    58,
+      44,    38,   124,    94,    43,    45,    42,    47,    37,   126,
+      40,    41
 };
 # endif
 
-#define YYPACT_NINF -18
+#define YYPACT_NINF -15
 
 #define yypact_value_is_default(Yystate) \
-  (!!((Yystate) == (-18)))
+  (!!((Yystate) == (-15)))
 
 #define YYTABLE_NINF -1
 
@@ -500,11 +504,12 @@ static const yytype_uint16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-      41,   -18,    45,    -1,    43,   -18,    -4,    41,   -18,   -18,
-     -18,   -18,   -18,   -18,   -18,   -18,     6,     6,     2,    39,
-      23,    14,    21,   -18,   -18,   -18,    22,   -18,   -18,    12,
-       2,     2,     2,     2,     2,     2,     2,     2,     2,   -18,
-     -18,    23,    14,    14,    14,    21,    21,   -18,   -18,   -18
+       2,   -15,    18,     8,    26,   -15,    -6,     2,   -15,   -15,
+     -15,   -15,   -15,   -15,   -15,   -15,     4,     4,     0,    38,
+      15,    37,    29,    16,   -15,   -15,   -15,    22,   -15,   -15,
+      10,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,   -15,   -15,    15,    37,    37,    37,    29,    29,
+      16,    16,   -15,   -15,   -15
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -513,24 +518,25 @@ static const yytype_int8 yypact[] =
 static const yytype_uint8 yydefact[] =
 {
        4,     6,     0,     0,     3,     1,    12,     4,     8,     9,
-      10,     5,    30,    31,    32,    13,     0,     0,     0,    11,
-      15,    19,    22,    26,    29,     2,     3,    27,    28,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,     0,     7,
-      33,    14,    16,    17,    18,    20,    21,    23,    24,    25
+      10,     5,    33,    34,    35,    13,     0,     0,     0,    11,
+      15,    19,    22,    25,    29,    32,     2,     3,    30,    31,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     7,    36,    14,    16,    17,    18,    20,    21,
+      23,    24,    26,    27,    28
 };
 
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -18,   -18,    42,    44,   -18,    24,   -18,   -18,   -18,   -14,
-       7,   -17,     5,    13
+     -15,   -15,    46,    47,   -15,    28,   -15,   -15,   -15,   -14,
+       3,    11,    12,    -1,    35
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
       -1,     2,     3,     4,     7,     8,     9,    10,    19,    20,
-      21,    22,    23,    24
+      21,    22,    23,    24,    25
 };
 
   /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -538,42 +544,43 @@ static const yytype_int8 yydefgoto[] =
      number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_uint8 yytable[] =
 {
-      12,    13,    14,    15,    29,     6,    12,    13,    14,    16,
-      12,    13,    14,    17,    18,    16,    41,    45,    46,    17,
-      18,    31,    32,    33,    18,    11,    34,    35,     6,    27,
-      28,    40,    31,    32,    33,    36,    37,    38,    42,    43,
-      44,    47,    48,    49,     1,     5,    11,    30,     0,    25,
-      39,    26
+      12,    13,    14,    15,    30,     1,    12,    13,    14,    16,
+      12,    13,    14,    17,    18,    16,     6,    44,     5,    17,
+      18,    32,    33,    34,    18,    11,    32,    33,    34,    11,
+       6,    43,    39,    40,    41,    45,    46,    47,    52,    53,
+      54,    35,    36,    37,    38,     0,    48,    49,    31,    50,
+      51,    28,    29,    26,    27,    42
 };
 
 static const yytype_int8 yycheck[] =
 {
-       4,     5,     6,     7,    18,     6,     4,     5,     6,    13,
-       4,     5,     6,    17,    18,    13,    30,    34,    35,    17,
-      18,     9,    10,    11,    18,     3,    12,    13,     6,    16,
-      17,    19,     9,    10,    11,    14,    15,    16,    31,    32,
-      33,    36,    37,    38,     3,     0,     3,     8,    -1,     7,
-      26,     7
+       6,     7,     8,     9,    18,     3,     6,     7,     8,    15,
+       6,     7,     8,    19,    20,    15,     8,    31,     0,    19,
+      20,    11,    12,    13,    20,     3,    11,    12,    13,     3,
+       8,    21,    16,    17,    18,    32,    33,    34,    39,    40,
+      41,     4,     5,    14,    15,    -1,    35,    36,    10,    37,
+      38,    16,    17,     7,     7,    27
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
      symbol of state STATE-NUM.  */
 static const yytype_uint8 yystos[] =
 {
-       0,     3,    21,    22,    23,     0,     6,    24,    25,    26,
-      27,     3,     4,     5,     6,     7,    13,    17,    18,    28,
-      29,    30,    31,    32,    33,    22,    23,    33,    33,    29,
-       8,     9,    10,    11,    12,    13,    14,    15,    16,    25,
-      19,    29,    30,    30,    30,    31,    31,    32,    32,    32
+       0,     3,    23,    24,    25,     0,     8,    26,    27,    28,
+      29,     3,     6,     7,     8,     9,    15,    19,    20,    30,
+      31,    32,    33,    34,    35,    36,    24,    25,    36,    36,
+      31,    10,    11,    12,    13,     4,     5,    14,    15,    16,
+      17,    18,    27,    21,    31,    32,    32,    32,    33,    33,
+      34,    34,    35,    35,    35
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_uint8 yyr1[] =
 {
-       0,    20,    21,    22,    22,    23,    23,    24,    24,    25,
-      25,    26,    26,    27,    28,    28,    29,    29,    29,    29,
-      30,    30,    30,    31,    31,    31,    31,    32,    32,    32,
-      33,    33,    33,    33
+       0,    22,    23,    24,    24,    25,    25,    26,    26,    27,
+      27,    28,    28,    29,    30,    30,    31,    31,    31,    31,
+      32,    32,    32,    33,    33,    33,    34,    34,    34,    34,
+      35,    35,    35,    36,    36,    36,    36
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
@@ -581,8 +588,8 @@ static const yytype_uint8 yyr2[] =
 {
        0,     2,     3,     1,     0,     2,     1,     3,     1,     1,
        1,     2,     1,     2,     3,     1,     3,     3,     3,     1,
-       3,     3,     1,     3,     3,     3,     1,     2,     2,     1,
-       1,     1,     1,     3
+       3,     3,     1,     3,     3,     1,     3,     3,     3,     1,
+       2,     2,     1,     1,     1,     1,     3
 };
 
 
@@ -1260,126 +1267,138 @@ yyreduce:
     {
         case 5:
 #line 36 "k12a/assembler/parser.y" /* yacc.c:1646  */
-    { k12a_asm_yylineno++; }
-#line 1265 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
+    { k12a_asm_yy_inc_lineno(); }
+#line 1272 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
     break;
 
   case 6:
 #line 37 "k12a/assembler/parser.y" /* yacc.c:1646  */
-    { k12a_asm_yylineno++; }
-#line 1271 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
+    { k12a_asm_yy_inc_lineno(); }
+#line 1278 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
     break;
 
   case 11:
 #line 51 "k12a/assembler/parser.y" /* yacc.c:1646  */
     { k12a_asm_make_instruction((yyvsp[-1].s), (yyvsp[0].i)); }
-#line 1277 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
+#line 1284 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
     break;
 
   case 12:
 #line 52 "k12a/assembler/parser.y" /* yacc.c:1646  */
     { k12a_asm_make_instruction((yyvsp[0].s), 0); }
-#line 1283 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
+#line 1290 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
     break;
 
   case 13:
 #line 56 "k12a/assembler/parser.y" /* yacc.c:1646  */
     { k12a_asm_make_label((yyvsp[-1].s)); }
-#line 1289 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
+#line 1296 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
     break;
 
   case 14:
 #line 60 "k12a/assembler/parser.y" /* yacc.c:1646  */
     { (yyval.i) = (yyvsp[-2].i) + 1; }
-#line 1295 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
+#line 1302 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
     break;
 
   case 15:
 #line 61 "k12a/assembler/parser.y" /* yacc.c:1646  */
     { (yyval.i) = 1; }
-#line 1301 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
+#line 1308 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
     break;
 
   case 16:
 #line 65 "k12a/assembler/parser.y" /* yacc.c:1646  */
     { k12a_asm_make_expr_binary((uint8_t) '&'); }
-#line 1307 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
+#line 1314 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
     break;
 
   case 17:
 #line 66 "k12a/assembler/parser.y" /* yacc.c:1646  */
     { k12a_asm_make_expr_binary((uint8_t) '|'); }
-#line 1313 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
+#line 1320 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
     break;
 
   case 18:
 #line 67 "k12a/assembler/parser.y" /* yacc.c:1646  */
     { k12a_asm_make_expr_binary((uint8_t) '^'); }
-#line 1319 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
+#line 1326 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
     break;
 
   case 20:
 #line 72 "k12a/assembler/parser.y" /* yacc.c:1646  */
-    { k12a_asm_make_expr_binary((uint8_t) '+'); }
-#line 1325 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
+    { k12a_asm_make_expr_binary((uint8_t) 'L'); }
+#line 1332 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
     break;
 
   case 21:
 #line 73 "k12a/assembler/parser.y" /* yacc.c:1646  */
-    { k12a_asm_make_expr_binary((uint8_t) '-'); }
-#line 1331 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
+    { k12a_asm_make_expr_binary((uint8_t) 'R'); }
+#line 1338 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
     break;
 
   case 23:
 #line 78 "k12a/assembler/parser.y" /* yacc.c:1646  */
-    { k12a_asm_make_expr_binary((uint8_t) '*'); }
-#line 1337 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
+    { k12a_asm_make_expr_binary((uint8_t) '+'); }
+#line 1344 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
     break;
 
   case 24:
 #line 79 "k12a/assembler/parser.y" /* yacc.c:1646  */
-    { k12a_asm_make_expr_binary((uint8_t) '/'); }
-#line 1343 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
+    { k12a_asm_make_expr_binary((uint8_t) '-'); }
+#line 1350 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
     break;
 
-  case 25:
-#line 80 "k12a/assembler/parser.y" /* yacc.c:1646  */
-    { k12a_asm_make_expr_binary((uint8_t) '%'); }
-#line 1349 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
+  case 26:
+#line 84 "k12a/assembler/parser.y" /* yacc.c:1646  */
+    { k12a_asm_make_expr_binary((uint8_t) '*'); }
+#line 1356 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
     break;
 
   case 27:
 #line 85 "k12a/assembler/parser.y" /* yacc.c:1646  */
-    { k12a_asm_make_expr_unary((uint8_t) '-'); }
-#line 1355 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
+    { k12a_asm_make_expr_binary((uint8_t) '/'); }
+#line 1362 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
     break;
 
   case 28:
 #line 86 "k12a/assembler/parser.y" /* yacc.c:1646  */
-    { k12a_asm_make_expr_unary((uint8_t) '~'); }
-#line 1361 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
+    { k12a_asm_make_expr_binary((uint8_t) '%'); }
+#line 1368 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
     break;
 
   case 30:
 #line 91 "k12a/assembler/parser.y" /* yacc.c:1646  */
-    { k12a_asm_make_expr_literal((yyvsp[0].i)); }
-#line 1367 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
+    { k12a_asm_make_expr_unary((uint8_t) '-'); }
+#line 1374 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
     break;
 
   case 31:
 #line 92 "k12a/assembler/parser.y" /* yacc.c:1646  */
+    { k12a_asm_make_expr_unary((uint8_t) '~'); }
+#line 1380 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
+    break;
+
+  case 33:
+#line 97 "k12a/assembler/parser.y" /* yacc.c:1646  */
+    { k12a_asm_make_expr_literal((yyvsp[0].i)); }
+#line 1386 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
+    break;
+
+  case 34:
+#line 98 "k12a/assembler/parser.y" /* yacc.c:1646  */
     { k12a_asm_make_expr_reg((yyvsp[0].i)); }
-#line 1373 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
+#line 1392 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
     break;
 
-  case 32:
-#line 93 "k12a/assembler/parser.y" /* yacc.c:1646  */
+  case 35:
+#line 99 "k12a/assembler/parser.y" /* yacc.c:1646  */
     { k12a_asm_make_expr_labelref((yyvsp[0].s)); }
-#line 1379 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
+#line 1398 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
     break;
 
 
-#line 1383 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
+#line 1402 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1607,8 +1626,14 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 96 "k12a/assembler/parser.y" /* yacc.c:1906  */
+#line 102 "k12a/assembler/parser.y" /* yacc.c:1906  */
 
+
+void k12a_asm_parse_string(const char *string) {
+    YY_BUFFER_STATE buffer_state = k12a_asm_yy_scan_string(string);
+    k12a_asm_yyparse();
+    k12a_asm_yy_delete_buffer(buffer_state);
+}
 
 void k12a_asm_parse_stdin() {
     k12a_asm_yyin = stdin;

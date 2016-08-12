@@ -10,6 +10,8 @@ proc eval(op: BinaryOp, a, b: int): int =
   of bopAnd: a and b
   of bopOr: a or b
   of bopXor: a xor b
+  of bopLShift: a shl b
+  of bopRShift: a shr b
   of bopAdd: a + b
   of bopSub: a - b
   of bopMul: a * b

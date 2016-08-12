@@ -1,20 +1,8 @@
 from k12a.types import Register
-from strutils import `%`
+import locs
 
 export Register
-
-type
-  Loc* = ref object
-    file*: string
-    line*: int
-    instantiation*: MacroInstantiation
-  
-  MacroInstantiation* = object
-    macroName*: string
-    loc*: Loc
-
-proc `$`*(loc: Loc): string =
-  "$1:$2" % [loc.file, $loc.line]
+export Loc, MacroInstantiation, `$`
 
 type
   ExprKind* = enum
@@ -32,6 +20,8 @@ type
     bopAnd
     bopOr
     bopXor
+    bopLShift
+    bopRShift
     bopAdd
     bopSub
     bopMul

@@ -1,6 +1,6 @@
-import tables
+import marshal, tables
 from os import parentDir
-from strutils import `%`, toLower
+from strutils import `%`, strip, toLowerASCII
 
 import types
 
@@ -11,13 +11,15 @@ import types
 type
   ParseError* = object of Exception
 
-var currentFilename: string
-var currentLineno {.header: "lexer_gen.h", importc: "k12a_asm_yylineno".}: int
-
+var currentLoc: Loc
 var unit: CompilationUnit
 var exprStack = newSeq[Expr]()
 
-proc reset() =
+proc copyCurrentLoc(): Loc =
+  result.deepCopy(currentLoc)
+
+proc reset(filename: string = "") =
+  currentLoc = Loc(file: filename, line: 1)
   unit = CompilationUnit(
     items: newSeq[Item](),
   )
@@ -28,41 +30,40 @@ proc popn[T](a: var seq[T], count: int): seq[T] {.noSideEffect.} =
   result = a[(length - count) .. (length - 1)]
   a.setLen(length - count)
 
-proc currentLoc(): Loc =
-  Loc(
-    file: currentFilename,
-    line: currentLineno,
-    instantiation: MacroInstantiation(macroName: nil, loc: nil),
-  )
-
 proc unreachable[T](): T =
   assert(false, "control should not be able to reach this point")
 
 proc parseError(msg: string) =
-  raise newException(ParseError, "parse error at $1: $2" % [$currentLoc(), msg])
+  raise newException(ParseError, "parse error at $1: $2" % [$currentLoc, msg])
 
 proc parseError(msg: cstring) {.cdecl, exportc: "k12a_asm_yyerror".} =
   parseError($msg)
 
+proc updateLoc(marshalledLoc: cstring) {.cdecl, exportc: "k12a_asm_yy_update_loc".} =
+  currentLoc = to[Loc](($marshalledLoc).strip)
+
+proc incLineno() {.cdecl, exportc: "k12a_asm_yy_inc_lineno".} =
+  inc currentLoc.line
+
 proc makeInstruction(mnemonic: cstring, numOperands: int64) {.cdecl, exportc: "k12a_asm_make_instruction".} =
   let operands = exprStack.popn(numOperands.int)
   unit.items.add Item(
-    loc: currentLoc(),
+    loc: copyCurrentLoc(),
     kind: itemInstruction,
-    mnemonic: ($mnemonic).toLower(),
+    mnemonic: ($mnemonic).toLowerASCII(),
     operands: operands,
   )
 
 proc makeLabel(name: cstring) {.cdecl, exportc: "k12a_asm_make_label".} =
   unit.items.add Item(
-    loc: currentLoc(),
+    loc: copyCurrentLoc(),
     kind: itemLabel,
     labelName: $name,
   )
 
 proc makeExprLiteral(value: int64) {.cdecl, exportc: "k12a_asm_make_expr_literal".} =
   exprStack.add Expr(
-    loc: currentLoc(),
+    loc: copyCurrentLoc(),
     kind: exprLiteral,
     literal: value.int,
   )
@@ -76,14 +77,14 @@ proc makeExprReg(regVal: int64) {.cdecl, exportc: "k12a_asm_make_expr_reg".} =
     of 3: regD
     else: unreachable[Register]()
   exprStack.add Expr(
-    loc: currentLoc(),
+    loc: copyCurrentLoc(),
     kind: exprReg,
     reg: reg,
   )
 
 proc makeExprLabelRef(name: cstring) {.cdecl, exportc: "k12a_asm_make_expr_labelref".} =
   exprStack.add Expr(
-    loc: currentLoc(),
+    loc: copyCurrentLoc(),
     kind: exprLabelRef,
     labelName: $name,
   )
@@ -96,7 +97,7 @@ proc makeExprUnary(opChar: uint8) {.cdecl, exportc: "k12a_asm_make_expr_unary".}
     else: unreachable[UnaryOp]()
   let child = exprStack.pop()
   exprStack.add Expr(
-    loc: currentLoc(),
+    loc: copyCurrentLoc(),
     kind: exprUnary,
     unaryOp: op,
     child: child,
@@ -108,6 +109,8 @@ proc makeExprBinary(opChar: uint8) {.cdecl, exportc: "k12a_asm_make_expr_binary"
     of '&'.ord: bopAnd
     of '|'.ord: bopOr
     of '^'.ord: bopXor
+    of 'L'.ord: bopLShift
+    of 'R'.ord: bopRShift
     of '+'.ord: bopAdd
     of '-'.ord: bopSub
     of '*'.ord: bopMul
@@ -117,26 +120,31 @@ proc makeExprBinary(opChar: uint8) {.cdecl, exportc: "k12a_asm_make_expr_binary"
   let rightChild = exprStack.pop()
   let leftChild = exprStack.pop()
   exprStack.add Expr(
-    loc: currentLoc(),
+    loc: copyCurrentLoc(),
     kind: exprBinary,
     binaryOp: op,
     leftChild: leftChild,
     rightChild: rightChild,
   )
 
+proc parseStringInternal(str: cstring) {.cdecl, header: "parser.h", importc: "k12a_asm_parse_string".}
 proc parseStdinInternal() {.cdecl, header: "parser.h", importc: "k12a_asm_parse_stdin".}
 proc parseFileInternal(filename: cstring) {.cdecl, header: "parser.h", importc: "k12a_asm_parse_file".}
 
-proc parseStdin*(): CompilationUnit =
+proc parseString*(str: string, filename: string = "<string>"): CompilationUnit =
+  reset(filename)
+  parseStringInternal(str)
+  result = unit
   reset()
-  currentFilename = "<stdin>"
+
+proc parseStdin*(filename: string = "<stdin>"): CompilationUnit =
+  reset(filename)
   parseStdinInternal()
   result = unit
   reset()
 
 proc parseFile*(filename: string): CompilationUnit =
-  reset()
-  currentFilename = filename
+  reset(filename)
   parseFileInternal(filename)
   result = unit
   reset()

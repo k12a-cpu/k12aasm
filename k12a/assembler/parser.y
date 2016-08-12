@@ -15,7 +15,7 @@
     char *s;
 }
 
-%token NEWLINE
+%token NEWLINE LSHIFT RSHIFT
 %token <i> INT REG
 %token <s> IDENTIFIER
 
@@ -33,8 +33,8 @@ optional_newlines
     ;
 
 newlines
-    : newlines NEWLINE                  { k12a_asm_yylineno++; }
-    | NEWLINE                           { k12a_asm_yylineno++; }
+    : newlines NEWLINE                  { k12a_asm_yy_inc_lineno(); }
+    | NEWLINE                           { k12a_asm_yy_inc_lineno(); }
     ;
 
 lines
@@ -62,9 +62,15 @@ operands
     ;
 
 expr
-    : expr '&' expr_sum                 { k12a_asm_make_expr_binary((uint8_t) '&'); }
-    | expr '|' expr_sum                 { k12a_asm_make_expr_binary((uint8_t) '|'); }
-    | expr '^' expr_sum                 { k12a_asm_make_expr_binary((uint8_t) '^'); }
+    : expr '&' expr_shift               { k12a_asm_make_expr_binary((uint8_t) '&'); }
+    | expr '|' expr_shift               { k12a_asm_make_expr_binary((uint8_t) '|'); }
+    | expr '^' expr_shift               { k12a_asm_make_expr_binary((uint8_t) '^'); }
+    | expr_shift
+    ;
+
+expr_shift
+    : expr_shift LSHIFT expr_sum        { k12a_asm_make_expr_binary((uint8_t) 'L'); }
+    | expr_shift RSHIFT expr_sum        { k12a_asm_make_expr_binary((uint8_t) 'R'); }
     | expr_sum
     ;
 
@@ -94,6 +100,12 @@ expr_atom
     | '(' expr ')'
 
 %%
+
+void k12a_asm_parse_string(const char *string) {
+    YY_BUFFER_STATE buffer_state = k12a_asm_yy_scan_string(string);
+    k12a_asm_yyparse();
+    k12a_asm_yy_delete_buffer(buffer_state);
+}
 
 void k12a_asm_parse_stdin() {
     k12a_asm_yyin = stdin;

@@ -54,9 +54,11 @@ extern int k12a_asm_yydebug;
   enum k12a_asm_yytokentype
   {
     NEWLINE = 258,
-    INT = 259,
-    REG = 260,
-    IDENTIFIER = 261
+    LSHIFT = 259,
+    RSHIFT = 260,
+    INT = 261,
+    REG = 262,
+    IDENTIFIER = 263
   };
 #endif
 
@@ -70,7 +72,7 @@ union K12A_ASM_YYSTYPE
     int64_t i;
     char *s;
 
-#line 74 "k12a/assembler/parser_gen.h" /* yacc.c:1909  */
+#line 76 "k12a/assembler/parser_gen.h" /* yacc.c:1909  */
 };
 
 typedef union K12A_ASM_YYSTYPE K12A_ASM_YYSTYPE;

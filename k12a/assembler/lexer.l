@@ -15,6 +15,10 @@
 [ \t]                         ;
 (\;.*)?\r?\n                  { return NEWLINE; }
 
+".loc".+\n                    { k12a_asm_yy_update_loc(k12a_asm_yytext+4); }
+
+"<<"                          { return LSHIFT; }
+">>"                          { return RSHIFT; }
 [\(\)\:\,\&\|\^\+\-\*\/\%\~]  { return k12a_asm_yytext[0]; }
 
 [Aa]/[^a-zA-Z0-9_]            { k12a_asm_yylval.i = 0;

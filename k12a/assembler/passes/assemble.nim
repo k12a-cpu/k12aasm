@@ -235,6 +235,8 @@ proc encodeInstruction(inst: Item): Instruction =
       of "sgt":
         cond = condSLE
         skipFlags.incl(skipNegate)
+      else:
+        assert false, "mnemonic should already have been vetted"
       result = result or encodeOperation(opSkip) or encodeCondition(cond) or encodeSkipFlags(skipFlags)
     else:
       assert false, "mnemonic should already have been vetted"
