@@ -318,7 +318,7 @@ extern int k12a_asm_yylex (void);
 #undef YY_DECL
 #endif
 
-#line 53 "k12a/assembler/lexer.l"
+#line 55 "k12a/assembler/lexer.l"
 
 
 #line 325 "k12a/assembler/lexer_gen.h"

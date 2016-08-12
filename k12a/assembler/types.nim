@@ -48,6 +48,8 @@ type
   ItemKind* = enum
     itemInstruction
     itemLabel
+    itemByte
+    itemWord
   
   Item* = ref object
     loc*: Loc
@@ -58,6 +60,8 @@ type
       operands*: seq[Expr]
     of itemLabel:
       labelName*: string
+    of itemByte, itemWord:
+      value*: Expr
   
   CompilationUnit* = ref object
     items*: seq[Item]

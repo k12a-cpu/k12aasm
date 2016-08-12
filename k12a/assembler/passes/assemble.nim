@@ -250,5 +250,14 @@ proc assemble*(unit: CompilationUnit): Image =
       let word = encodeInstruction(item)
       result[item.address] = uint8(word shr 8)
       result[item.address+1] = uint8(word)
+    of itemByte:
+      assert item.value.kind == exprLiteral
+      let val = item.value.literal
+      result[item.address] = uint8(val)
+    of itemWord:
+      assert item.value.kind == exprLiteral
+      let val = item.value.literal
+      result[item.address] = uint8(val shr 8)
+      result[item.address+1] = uint8(val)
     else:
       discard

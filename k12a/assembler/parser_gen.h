@@ -56,9 +56,11 @@ extern int k12a_asm_yydebug;
     NEWLINE = 258,
     LSHIFT = 259,
     RSHIFT = 260,
-    INT = 261,
-    REG = 262,
-    IDENTIFIER = 263
+    BYTE_DIRECTIVE = 261,
+    WORD_DIRECTIVE = 262,
+    INT = 263,
+    REG = 264,
+    IDENTIFIER = 265
   };
 #endif
 
@@ -72,7 +74,7 @@ union K12A_ASM_YYSTYPE
     int64_t i;
     char *s;
 
-#line 76 "k12a/assembler/parser_gen.h" /* yacc.c:1909  */
+#line 78 "k12a/assembler/parser_gen.h" /* yacc.c:1909  */
 };
 
 typedef union K12A_ASM_YYSTYPE K12A_ASM_YYSTYPE;

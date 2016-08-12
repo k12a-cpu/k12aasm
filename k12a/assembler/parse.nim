@@ -61,6 +61,22 @@ proc makeLabel(name: cstring) {.cdecl, exportc: "k12a_asm_make_label".} =
     labelName: $name,
   )
 
+proc makeByteDirective() {.cdecl, exportc: "k12a_asm_make_byte_directive".} =
+  let value = exprStack.pop()
+  unit.items.add Item(
+    loc: copyCurrentLoc(),
+    kind: itemByte,
+    value: value,
+  )
+
+proc makeWordDirective() {.cdecl, exportc: "k12a_asm_make_word_directive".} =
+  let value = exprStack.pop()
+  unit.items.add Item(
+    loc: copyCurrentLoc(),
+    kind: itemWord,
+    value: value,
+  )
+
 proc makeExprLiteral(value: int64) {.cdecl, exportc: "k12a_asm_make_expr_literal".} =
   exprStack.add Expr(
     loc: copyCurrentLoc(),

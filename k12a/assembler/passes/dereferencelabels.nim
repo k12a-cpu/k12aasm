@@ -28,5 +28,7 @@ proc dereferenceLabels*(unit: CompilationUnit) =
     of itemInstruction:
       for operand in item.operands.mitems():
         walk(operand)
+    of itemByte, itemWord:
+      walk(item.value)
     else:
       discard

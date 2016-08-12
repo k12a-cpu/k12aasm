@@ -16,6 +16,8 @@
 }
 
 %token NEWLINE LSHIFT RSHIFT
+%token BYTE_DIRECTIVE
+%token WORD_DIRECTIVE
 %token <i> INT REG
 %token <s> IDENTIFIER
 
@@ -45,6 +47,8 @@ lines
 line
     : instruction
     | label
+    | byte_directive
+    | word_directive
     ;
 
 instruction
@@ -54,6 +58,14 @@ instruction
 
 label
     : IDENTIFIER ':'                    { k12a_asm_make_label($1); }
+    ;
+
+byte_directive
+    : BYTE_DIRECTIVE expr               { k12a_asm_make_byte_directive(); }
+    ;
+
+word_directive
+    : WORD_DIRECTIVE expr               { k12a_asm_make_word_directive(); }
     ;
 
 operands

@@ -182,6 +182,9 @@ proc check(c: var Checker, item: Item) =
       c.labels[name].defLoc = item.loc
     else:
       c.error(item.loc, "redefinition of label '$1' (previous definition at $2)" % [name, $c.labels[name].defLoc])
+  of itemByte, itemWord:
+    if not c.checkLiteral(item.value):
+      c.error(item.loc, "operand must be a literal or label reference")
 
 proc check(c: var Checker, unit: CompilationUnit) =
   for item in unit.items.mitems:
