@@ -35,8 +35,8 @@ optional_newlines
     ;
 
 newlines
-    : newlines NEWLINE                  { k12a_asm_yy_inc_lineno(); }
-    | NEWLINE                           { k12a_asm_yy_inc_lineno(); }
+    : newlines NEWLINE                  { k12a_asm_inc_lineno(); }
+    | NEWLINE                           { k12a_asm_inc_lineno(); }
     ;
 
 lines

@@ -1278,13 +1278,13 @@ yyreduce:
     {
         case 5:
 #line 38 "k12a/assembler/parser.y" /* yacc.c:1646  */
-    { k12a_asm_yy_inc_lineno(); }
+    { k12a_asm_inc_lineno(); }
 #line 1283 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
     break;
 
   case 6:
 #line 39 "k12a/assembler/parser.y" /* yacc.c:1646  */
-    { k12a_asm_yy_inc_lineno(); }
+    { k12a_asm_inc_lineno(); }
 #line 1289 "k12a/assembler/parser_gen.c" /* yacc.c:1646  */
     break;
 

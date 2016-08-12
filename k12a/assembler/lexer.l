@@ -15,7 +15,7 @@
 [ \t]                         ;
 (\;.*)?\r?\n                  { return NEWLINE; }
 
-".loc".+\n                    { k12a_asm_yy_update_loc(k12a_asm_yytext+4); }
+".loc".+\n                    { k12a_asm_update_loc(k12a_asm_yytext+4); }
 ".byte"/[^a-zA-Z0-9_]         { return BYTE_DIRECTIVE; }
 ".word"/[^a-zA-Z0-9_]         { return WORD_DIRECTIVE; }
 

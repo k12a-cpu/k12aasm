@@ -826,7 +826,7 @@ case 3:
 /* rule 3 can match eol */
 YY_RULE_SETUP
 #line 18 "k12a/assembler/lexer.l"
-{ k12a_asm_yy_update_loc(k12a_asm_yytext+4); }
+{ k12a_asm_update_loc(k12a_asm_yytext+4); }
 	YY_BREAK
 case 4:
 /* rule 4 can match eol */

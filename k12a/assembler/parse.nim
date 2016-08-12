@@ -39,10 +39,10 @@ proc parseError(msg: string) =
 proc parseError(msg: cstring) {.cdecl, exportc: "k12a_asm_yyerror".} =
   parseError($msg)
 
-proc updateLoc(marshalledLoc: cstring) {.cdecl, exportc: "k12a_asm_yy_update_loc".} =
+proc updateLoc(marshalledLoc: cstring) {.cdecl, exportc: "k12a_asm_update_loc".} =
   currentLoc = to[Loc](($marshalledLoc).strip)
 
-proc incLineno() {.cdecl, exportc: "k12a_asm_yy_inc_lineno".} =
+proc incLineno() {.cdecl, exportc: "k12a_asm_inc_lineno".} =
   inc currentLoc.line
 
 proc makeInstruction(mnemonic: cstring, numOperands: int64) {.cdecl, exportc: "k12a_asm_make_instruction".} =
