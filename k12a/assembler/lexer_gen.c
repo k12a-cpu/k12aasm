@@ -916,7 +916,7 @@ YY_RULE_SETUP
 case 14:
 YY_RULE_SETUP
 #line 37 "k12a/assembler/lexer.l"
-{ k12a_asm_yylval.i = -((int64_t) strtol(k12a_asm_yytext+2, NULL, 16));
+{ k12a_asm_yylval.i = -((int64_t) strtol(k12a_asm_yytext+3, NULL, 16));
                                 return INT; }
 	YY_BREAK
 case 15:
@@ -928,7 +928,7 @@ YY_RULE_SETUP
 case 16:
 YY_RULE_SETUP
 #line 41 "k12a/assembler/lexer.l"
-{ k12a_asm_yylval.i = -((int64_t) strtol(k12a_asm_yytext+2, NULL, 2));
+{ k12a_asm_yylval.i = -((int64_t) strtol(k12a_asm_yytext+3, NULL, 2));
                                 return INT; }
 	YY_BREAK
 case 17:
@@ -940,7 +940,7 @@ YY_RULE_SETUP
 case 18:
 YY_RULE_SETUP
 #line 45 "k12a/assembler/lexer.l"
-{ k12a_asm_yylval.i = -((int64_t) strtol(k12a_asm_yytext, NULL, 10));
+{ k12a_asm_yylval.i = -((int64_t) strtol(k12a_asm_yytext+1, NULL, 10));
                                 return INT; }
 	YY_BREAK
 case 19:

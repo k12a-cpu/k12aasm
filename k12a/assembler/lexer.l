@@ -34,15 +34,15 @@
 
 0x[0-9a-fA-F]+                { k12a_asm_yylval.i = (int64_t) strtol(k12a_asm_yytext+2, NULL, 16);
                                 return INT; }
--0x[0-9a-fA-F]+               { k12a_asm_yylval.i = -((int64_t) strtol(k12a_asm_yytext+2, NULL, 16));
+-0x[0-9a-fA-F]+               { k12a_asm_yylval.i = -((int64_t) strtol(k12a_asm_yytext+3, NULL, 16));
                                 return INT; }
 0b[01]+                       { k12a_asm_yylval.i = (int64_t) strtol(k12a_asm_yytext+2, NULL, 2);
                                 return INT; }
--0b[01]+                      { k12a_asm_yylval.i = -((int64_t) strtol(k12a_asm_yytext+2, NULL, 2));
+-0b[01]+                      { k12a_asm_yylval.i = -((int64_t) strtol(k12a_asm_yytext+3, NULL, 2));
                                 return INT; }
 [0-9]+                        { k12a_asm_yylval.i = (int64_t) strtol(k12a_asm_yytext, NULL, 10);
                                 return INT; }
--[0-9]+                       { k12a_asm_yylval.i = -((int64_t) strtol(k12a_asm_yytext, NULL, 10));
+-[0-9]+                       { k12a_asm_yylval.i = -((int64_t) strtol(k12a_asm_yytext+1, NULL, 10));
                                 return INT; }
 
 [a-zA-Z_][a-zA-Z0-9_]*        { k12a_asm_yylval.s = strdup(k12a_asm_yytext);
