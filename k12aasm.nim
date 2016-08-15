@@ -6,6 +6,7 @@ import k12a.assembler.passes.check
 import k12a.assembler.passes.assignaddresses
 import k12a.assembler.passes.dereferencelabels
 import k12a.assembler.passes.foldconstants
+import k12a.assembler.passes.check2
 import k12a.assembler.passes.assemble
 
 proc writeImage(outputStream: Stream, image: Image, format: string) =
@@ -88,6 +89,13 @@ if messages.len != 0:
 assignAddresses(unit)
 dereferenceLabels(unit)
 foldConstants(unit)
+
+# Check
+let messages2 = check2(unit)
+if messages2.len != 0:
+  for message in messages2:
+    echo message
+  quit(1)
 
 # Assemble image
 let image = assemble(unit)
