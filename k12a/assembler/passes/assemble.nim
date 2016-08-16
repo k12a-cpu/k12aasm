@@ -205,7 +205,7 @@ proc encodeInstruction(inst: Item): Instruction =
       case s
       of "z", "eq": cond = condZero
       of "n":       cond = condNegative
-      of "b":       cond = condBorrow
+      of "b":       cond = condLSB
       of "v":       cond = condOverflow
       of "ult":     cond = condULT
       of "ule":     cond = condULE
@@ -218,7 +218,7 @@ proc encodeInstruction(inst: Item): Instruction =
         cond = condNegative
         skipFlags.incl(skipNegate)
       of "nb":
-        cond = condBorrow
+        cond = condLSB
         skipFlags.incl(skipNegate)
       of "nv":
         cond = condOverflow
