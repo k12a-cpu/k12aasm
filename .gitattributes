@@ -1,0 +1,3 @@
+# Exclude auto-generated C files from Github's language statistics
+k12a/assembler/*_gen.c linguist-vendored
+k12a/assembler/*_gen.h linguist-vendored
